@@ -90,13 +90,12 @@
 ; character.
 
 ;; Health is one of:
-;; - "Dead"
 ;; - Natural
-;; interp. as dead or alive state, how many remaining lives
+;; - "Dead"
+;; interp. as dead or alive state, how many extra remaining lives
 (define A4 "Dead")
 (define A5 0)
 (define A6 1)
-(define A7 2)
 
 #;
 (define (fn-for-health h)
@@ -118,12 +117,11 @@
 (check-expect (increase-health A4) A4)
 (check-expect (increase-health A5) 1)
 (check-expect (increase-health A6) 2)
-(check-expect (increase-health A7) 3)
 
 ; (define (increase-health h) "Dead") ; stub
 ; <Template taken from Data Definition for Health>
 (define (increase-health h)
   (cond	[(number? h) (+ 1 h)]
-	[else h]))
+	[else "Dead"]))
 
 (test)

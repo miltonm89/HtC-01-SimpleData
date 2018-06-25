@@ -39,36 +39,50 @@
 (define CTR-Y (/ HEIGHT 2))
 
 (define MTS (empty-scene WIDTH HEIGHT "midnight blue"))
-(define cat (text "Cat" 24 "Brown"))
+(define CAT-IMG (text "Cat" 24 "Brown"))
 
 ;; =================
 ;; Data definitions:
 
-;; WS is ... (give WS a better name)
+;; Cat is Number
+;; interp. x position of the cat in screen coordinates
+(define C1 0)           ; left edge
+(define C2 (/ WIDTH 2)) ; middle
+(define C3 WIDTH)       ; right edge
 
+#;
+(define (fn-for-cat c)
+  (... c))
+;; Template rules ised:
+;; - atomic non-distinct: Number
 
 ;; ================
 ;; Functions:
 
-;; WS -> WS
+;; Cat -> CAT 
 ;; start the world with ...
 ;;
-(define (main ws)
-  (big-bang ws                  ; WS
-	    (on-tick    tock)   ; WS -> WS
-	    (to-draw    render) ; WS -> Images
-	    (stop-when  ...)    ; WS -> Boolean
-	    (on-mouse   ...)    ; WS Integer Integer MouseEvent -> WS
-	    (on-key     ...)))  ; WS KeyEvent -> WS
+(define (main c)
+  (big-bang c                          ; CAT 
+	    (on-tick    advance-cat)   ; CAT -> CAT 
+	    (to-draw    render)))        ; CAT -> Images
 
-;; WS -> WS
-;; produce the next ...
-;; !!!
-(define (tock ws) ...)
+;; CAT -> CAT 
+;; produce the next Cat byt advncing it 1 pixel to the right 
+(check-expect (advance-cat 3) 4)
+;(define (advance-cat c) 0)  ; stub
+;<use template from Cat>
 
-;; WS -> Image
-;; render ...
-;; !!!
-(define (render ws) ...)
+(define (advance-cat c)
+  (add1 c))
+
+;; CAT -> Image
+;; render the cat image at appropriate place on MTS
+(check-expect (render 4) (place-image CAT-IMG 4 CTR-Y MTS))
+; (define (render c) MTS) ; stub
+;<use template from Cat>
+
+(define (render c)
+  (place-image CAT-IMG c CTR-Y MTS))
 
 (test)

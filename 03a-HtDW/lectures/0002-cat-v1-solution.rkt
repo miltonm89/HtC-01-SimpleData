@@ -5,8 +5,8 @@
 ; Check that check-expect is working in this format
 (check-expect true true)
 (check-expect false false)
-(check-expect false true)
-(check-expect true false)
+;(check-expect false true)
+;(check-expect true false)
 
 (require 2htdp/image)
 (require 2htdp/universe)

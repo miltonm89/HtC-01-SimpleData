@@ -31,9 +31,4 @@
 ; Once you are finished the simple version of the program, you can improve
 ; by reseting the countdown to ten when you press spacebar.
 
-(define CD 10)
-(define CD 3)
-(define CD 0)
-
-
 (test)

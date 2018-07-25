@@ -42,7 +42,7 @@
 ; Next is red, and so on.
 ;
 ; To make your lights change at a reasonable speed, you can use the
-; rate option to on-tick. If you say, for example, (on-teck next-color 1)
+; rate option to on-tick. If you say, for example, (on-tick next-color 1)
 ; then big-bang will wait 1 second between calls to next-color.
 ;
 ; Remember to follow the HtDW recipe! Be sure to do a proper domain 
@@ -51,6 +51,15 @@
 ; Note: If you want to design a slightly simpler version of the program,
 ; you can modify it to display a single circle that changes color, rather
 ; than three stacked circles.
+
+; ===============
+; Constants: 
+(define HEIGHT 600)
+(define WIDTH 300)
+(define CTR-X (/ WIDTH 2))
+(define CTR-Y (/ HEIGHT 2))
+(define MTS (empty-scene WIDTH HEIGHT))
+
 (define RED-LIGHT 
   (underlay (rectangle 50 130 "solid" "black")
      (above (circle 20 "solid" "red")
@@ -66,5 +75,71 @@
      (above (circle 20 "outline" "red")
             (circle 20 "solid" "yellow")
             (circle 20 "outline" "green"))))
+
+; ===============
+; Data Definitions:
+
+; Traffic is one of:
+; - "red"
+; - "green"
+; - "yellow"
+; interpret as the currently lit traffic light
+
+; <examples redundnat for enumeration>
+
+#;
+(define (fn-for-traffic t)
+  (cond [(string=? "red" t) (...)]
+	[(string=? "green" t) (...)]
+	[(string=? "yellow" t) (...)]))
+
+; Template rules used:
+; - one of: 3 cases
+; - atomic distinct: "red"
+; - atomic distinct: "green"
+; - atomic distinct: "yellow"
+
+; ==============
+; Functions:
+
+;; Traffic -> Traffic 
+;; start the world with (main "red")
+;;
+(define (main t)
+        (big-bang t                    ; Traffic 
+        (on-tick advance-traffic 1)    ; Traffic -> Traffic 
+        (to-draw render)))             ; Traffic -> Image
+
+; advance-traffic
+; Traffic -> Traffic
+; produce next traffic state
+(check-expect (advance-traffic "red") "green")
+(check-expect (advance-traffic "green") "yellow")
+(check-expect (advance-traffic "yellow") "red")
+
+; (define (advance-traffic t) "red") ; stub
+
+; <template from Traffic>
+
+(define (advance-traffic t)
+  (cond [(string=? "red" t) "green"]
+	[(string=? "green" t) "yellow"]
+	[(string=? "yellow" t) "red"]))
+
+; render
+; Traffic -> Image
+; render an image of the current traffic state
+(check-expect (render "red") RED-LIGHT)
+(check-expect (render "green") GREEN-LIGHT)
+(check-expect (render "yellow") YELLOW-LIGHT)
+
+;(define (render t) RED-LIGHT) ; stub
+
+; <template from Traffic>
+
+(define (render t)
+  (cond [(string=? "red" t) RED-LIGHT]
+	[(string=? "green" t) GREEN-LIGHT]
+	[(string=? "yellow" t) YELLOW-LIGHT]))
 
 (test)

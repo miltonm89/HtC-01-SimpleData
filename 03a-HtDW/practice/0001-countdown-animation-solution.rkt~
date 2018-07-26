@@ -44,7 +44,7 @@
 ; ==============
 ; Data Definitions:
 
-; Countdown is a Natural[0,10] 
+; Countdown is a Number
 ; interp. as the current value of the countdown
 (define CD1 10)
 (define CD2 3)
@@ -55,7 +55,7 @@
   (... cd))
 
 ; Template rules used: 
-; - atomic non-distinct: Natural[0,10] 
+; - atomic non-distinct: number
 
 ; ==============
 ; Functions:

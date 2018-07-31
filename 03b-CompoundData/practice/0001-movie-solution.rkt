@@ -23,6 +23,23 @@
 ;; 
 ;; However, feel free to resarch more on your own!
 
+(define-struct movie (title budget year))
+;; movie is (make-movie String Number Number)
+;; interp. (make-movie title budget year) is a movie with
+;;     - title is the title of the movie
+;;     - budget is the movie's budget
+;;     - year is the movie's release year
+(define M1 (make-movie "Titanic" 200000000 1997))
+(define M2 (make-movie "Avatar"  237000000 2009))
+(define M3 (make-movie "The Avengers" 220000000 2012))
+
+(define (fn-for-movie m)
+  (... (movie-title m)   ; String
+       (movie-budget m)  ; Number
+       (movie-year m)))  ; Number
+
+;; Template rules used:
+;; - Compound data: 3 fields
 
 ;; =========================
 ;; Functions: 
@@ -35,5 +52,28 @@
 ;; Note that the rule for templating a function that consumes two compound data 
 ;; parameters is for the template to include all the selectors for both 
 ;; parameters.
+
+;; Movie Movie -> String
+(check-expect (chrono M1 M2) (movie-title M1))
+(check-expect (chrono M1 M3) (movie-title M1))
+(check-expect (chrono M3 M2) (movie-title M2))
+
+;(define (chrono movie1 movie2) movie1) ; stub
+
+; <Template from Movie>
+#;
+(define (fn-for-movie m1 m2)
+  (... (movie-title m1)   ; String
+       (movie-budget m1)  ; Number
+       (movie-year m1)    ; Number
+       (movie-title m2)   ; String
+       (movie-budget m2)  ; Number
+       (movie-year m2)))  ; Number
+
+(define (chrono movie1 movie2)
+  (cond [(< (movie-year movie1) (movie-year movie2)) 
+	    (movie-title movie1)]
+	[else (movie-title movie2)]))
+
 
 (test)

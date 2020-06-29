@@ -42,14 +42,11 @@
 
 (define WIDTH 400)
 (define HEIGHT 200)
-
 (define CTR-Y (/ HEIGHT 2))
 
 (define RCOW (overlay/align "right" "middle" (circle 30 "outline" "red")
 			                     (circle 10 "outline" "blue")))
-
-
-(define LCOW (overlay/align "left" "middle" (circle 30 "outline" "red")
+(define LCOW (overlay/align "left" "middle"  (circle 30 "outline" "red")
 			                     (circle 10 "outline" "blue")))
 
 (define MTS (empty-scene WIDTH HEIGHT))
@@ -64,8 +61,8 @@
 ;;    x is in the screen coordinates (pixels)
 ;;    dx is in pixels per tick
 ;;
-(define C1 (make-cow 10  3)) ; at 10, moving left -> right
-(define C2 (make-cow 20 -4)) ; at 20, moving left <- right
+(define C1 (make-cow 10  3)) ; at 10, moving left -> right at 3 pixels/tick
+(define C2 (make-cow 20 -4)) ; at 20, moving left <- right at 4 pixels/tick
 ;;
 ;;(define (fn-for-cow c)
 ;;  (... (cow-x c)       ; Natural[0, WIDTH]
@@ -80,17 +77,16 @@
 ;; Functions:
 
 ;; Cow -> Cow 
-;; start the world with make-cow 
+;; start the world with (main (make-cow 0 3))
 ;;
 (define (main c)
-  (big-bang c                        ; WS
-	    (on-tick   next-cow)     ; WS -> WS
-	    (to-draw   render-cow)   ; WS -> Image
-	    (on-key    handle-key))) ; WS KeyEvent -> WS
+  (big-bang c                        ; Cow
+	    (on-tick   next-cow)     ; Cow          -> Cow 
+	    (to-draw   render-cow)   ; Cow          -> Image
+	    (on-key    handle-key))) ; Cow KeyEvent -> Cow 
 
 ;; Cow -> Cow 
 ;; increase cow x by x; bounce off edges
-;; !!!
 (check-expect (next-cow (make-cow 20  3)) (make-cow (+ 20 3)  3)) ; middle
 (check-expect (next-cow (make-cow 20 -3)) (make-cow (- 20 3) -3)) ; 
 
@@ -114,7 +110,6 @@
 
 ;; Cow -> Image
 ;; place appropriate cow image on MTS at (cow-x c) and CTR-Y
-;; !!!
 (check-expect (render-cow (make-cow 99 3))
               (place-image RCOW 99 CTR-Y MTS))
 (check-expect (render-cow (make-cow 33 -3))

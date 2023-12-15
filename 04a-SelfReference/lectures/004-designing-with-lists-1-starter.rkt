@@ -30,6 +30,7 @@
 ;; interp. each number in the list is an owl weight in ounces
 (define LON1 empty)
 (define LON2 (cons 60 (cons 42 empty)))
+
 #;
 (define (fn-for-lon lon)
   (cond [(empty? lon) (...)]
@@ -43,7 +44,6 @@
 ;;  - compound: (cons Number ListOfNumber)
 ;;  - self-reference: (rest lon) is ListOfNumber
 
-  
 
 ;; Functions:
 
@@ -51,7 +51,8 @@
 ;; produce sum of weights of owls in lon
 (check-expect (sum empty) 0)
 (check-expect (sum (cons 20 empty)) 20)
-(check-expect (sum (cons 32 (cons 20 empty))) (+ 32 20))
+;;(check-expect (sum (cons 32 (cons 20 empty))) (+ 32 20))
+(check-expect (sum LON2) (+ 42 60))
 
 ;(define (sum lon) 0) ;stub
 
@@ -61,5 +62,18 @@
          (+ (first lon)          
             (sum (rest lon)))]))
 
+;; List of Number -> Natural
+;; produce total number of weights in consumed list
+(check-expect (count empty) 0)
+(check-expect (count LON2) 2)
+(check-expect (count (cons 12 empty)) (+ 1 0))
+(check-expect (count (cons 12 (cons 10 (cons 23 (cons 32 empty))))) (+ 1 1 1 1))
 
+;; (define (count lon) 0) ; stub
+
+(define (count lon)
+  (cond [(empty? lon) 0]
+	[else 
+	  (+ 1
+	     (count (rest lon)))]))
 (test)

@@ -52,7 +52,7 @@
 
 (define MTS (empty-scene WIDTH HEIGHT)) ; the empty scene
 
-(define BEAR-IMG (circle 30 "solid" "brown"))
+(define BEAR-IMG .)
 
 ;; =================
 ;; Data definitions:

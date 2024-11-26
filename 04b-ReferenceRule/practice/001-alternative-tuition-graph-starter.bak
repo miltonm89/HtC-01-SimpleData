@@ -44,17 +44,24 @@
 (define BAR-COLOR "lightblue")
 
 ;; (A)
-;; From the Design recipe:
+;; From the design recipe:
 ;; In order to be well-formed, a self-referential data definition must:
 ;;
 ;; (i) have at least one case without self reference (the base case(s))
-;; (ii) have at least one case with self reference
+;;(ii) have at least one case with self reference
 
-;; The data definition does specify a case without self reference:
-;; it can be False
+;; (define-struct school (name tuition next))
+;; School is one of:
+;;  - false
+;;  - (make-school String Natural School)
+;; interp. an arbitrary number of schools, where for each school we have its
+;;         name and its tuition in USD
 
-;; The data definition has a case that does contain a self reference:
-;; The third part of data is the self reference (School)
+;; Base case is "false" and the self reference is seen in the second case where
+;; the third item is a School data type
+
+;; Yes, this is a well-formed, self-referential data type
+
 
 
 ;; (B)
